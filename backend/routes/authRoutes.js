@@ -13,7 +13,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { login, verifyOTP, logout } = require("../controller/authController");
+const { login, verifyOTP, logout } = require("../controllers/authController");
 const { verifyToken, authorizeRoles } = require("../middleware/authMiddleware");
 
 router.post("/login", login);
