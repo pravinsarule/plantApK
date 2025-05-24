@@ -2,7 +2,7 @@
 // controllers/authController.js
 const pool = require("../config/db.config");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { generateOTP, sendOTP } = require("../services/emailService");
 
 // Step 1: Login with Email + Password
