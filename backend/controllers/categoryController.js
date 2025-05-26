@@ -1,4 +1,4 @@
-const pool = require('../config/db'); // your PostgreSQL pool
+const pool = require('../config/db.config'); // your PostgreSQL pool
 
 exports.getAllCategories = async (req, res) => {
   try {

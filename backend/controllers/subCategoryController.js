@@ -1,5 +1,5 @@
 // controllers/subcategoriesController.js
-const pool = require('../config/db');
+const pool = require('../config/db.config');
 
 
 
