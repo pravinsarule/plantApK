@@ -1,6 +1,7 @@
 
+
 // controllers/authController.js
-const pool = require("../config/db.config");
+const pool = require("../config/db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { generateOTP, sendOTP } = require("../services/emailService");
