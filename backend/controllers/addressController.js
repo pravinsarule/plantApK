@@ -101,23 +101,32 @@ module.exports = {
 
 
 // Update an existing address (only if it belongs to the user)
+// Update address for logged-in user
 const updateAddress = async (req, res) => {
-  const {
-    name,
-    phone,
-    village,
-    landmark,
-    address,
-    city,
-    state,
-    pincode,
-    country = 'India',
-    is_default = false,
-  } = req.body;
-
   try {
+    const user_id = req.user?.id; // Get user ID from token
+    const address_id = req.params.id; // Address ID from route
+
+    const {
+      name,
+      phone,
+      village,
+      landmark,
+      address,
+      city,
+      state,
+      pincode,
+      country = 'India',
+      is_default = false,
+    } = req.body;
+
+    if (!user_id) {
+      return res.status(401).json({ error: 'Unauthorized - userId missing' });
+    }
+
+    // If is_default is set to true, unset other default addresses for this user
     if (is_default) {
-      await pool.query('UPDATE user_addresses SET is_default = FALSE WHERE user_id = $1', [req.userId]);
+      await pool.query('UPDATE user_addresses SET is_default = FALSE WHERE user_id = $1', [user_id]);
     }
 
     const result = await pool.query(
@@ -146,8 +155,8 @@ const updateAddress = async (req, res) => {
         pincode,
         country,
         is_default,
-        req.params.id,
-        req.userId,
+        address_id,
+        user_id
       ]
     );
 
@@ -157,9 +166,12 @@ const updateAddress = async (req, res) => {
 
     res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error updating address:', err.message);
+    res.status(500).json({ error: 'Failed to update address' });
   }
 };
+
+
 
 // Delete an address (only if it belongs to the user)
 const deleteAddress = async (req, res) => {
