@@ -13,6 +13,11 @@ const subCategoryRoutes = require("./routes/subCategoryRoutes");
 const productRoutes = require('./routes/productRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 
+// const vendorCitiesRoutes = require('./routes/vendorCitiesRoutes');
+
+const locationRoutes = require('./routes/locationRoutes');
+const addressRoutes = require('./routes/addressRoutes');
+
 // Create Express app
 const app = express();
 
@@ -32,6 +37,12 @@ app.use("/api/user", auth_Routes);
 app.use("/api/user", subCategoryRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/category', categoryRoutes);
+
+// app.use('/api/vendor-cities', vendorCitiesRoutes);
+
+app.use('/api/location', locationRoutes);
+
+app.use('/api/address', addressRoutes);
 
 // Root route
 app.get('/', (req, res) => {
