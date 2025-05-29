@@ -3,31 +3,63 @@ const pool = require('../config/db.config');
 // Get all addresses for the logged-in user
 const getAllAddresses = async (req, res) => {
   try {
+    const user_id = req.user?.id;
+
+    if (!user_id) {
+      return res.status(401).json({ error: 'Unauthorized - userId missing' });
+    }
+
     const result = await pool.query(
       'SELECT * FROM user_addresses WHERE user_id = $1 ORDER BY is_default DESC, updated_at DESC',
-      [req.userId]
+      [user_id]
     );
+
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error fetching addresses:', err.message);
+    res.status(500).json({ error: 'Failed to fetch addresses' });
   }
 };
 
 // Get a specific address by ID (only if it belongs to the user)
+// const getAddressById = async (req, res) => {
+//   try {
+//     const result = await pool.query(
+//       'SELECT * FROM user_addresses WHERE id = $1 AND user_id = $2',
+//       [req.params.id, req.userId]
+//     );
+
+//     if (result.rows.length === 0) {
+//       return res.status(404).json({ error: 'Address not found' });
+//     }
+
+//     res.json(result.rows[0]);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// };
 const getAddressById = async (req, res) => {
   try {
+    const user_id = req.user?.id;
+    const address_id = req.params.id;
+
+    if (!user_id) {
+      return res.status(401).json({ error: 'Unauthorized - userId missing' });
+    }
+
     const result = await pool.query(
       'SELECT * FROM user_addresses WHERE id = $1 AND user_id = $2',
-      [req.params.id, req.userId]
+      [address_id, user_id]
     );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Address not found' });
+      return res.status(404).json({ error: 'Address not found or unauthorized' });
     }
 
     res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error fetching address by ID:', err.message);
+    res.status(500).json({ error: 'Failed to fetch address' });
   }
 };
 
