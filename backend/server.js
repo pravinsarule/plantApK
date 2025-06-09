@@ -12,6 +12,7 @@ const auth_Routes = require("./routes/authRoutes");
 const subCategoryRoutes = require("./routes/subCategoryRoutes");
 const productRoutes = require('./routes/productRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const detectionRoutes = require('./routes/detectionRoutes');
 
 // const vendorCitiesRoutes = require('./routes/vendorCitiesRoutes');
 
@@ -37,6 +38,8 @@ app.use("/api/user", auth_Routes);
 app.use("/api/user", subCategoryRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/category', categoryRoutes);
+
+app.use('/api/detection', detectionRoutes);
 
 // app.use('/api/vendor-cities', vendorCitiesRoutes);
 

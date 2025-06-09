@@ -21,23 +21,7 @@ const getAllAddresses = async (req, res) => {
   }
 };
 
-// Get a specific address by ID (only if it belongs to the user)
-// const getAddressById = async (req, res) => {
-//   try {
-//     const result = await pool.query(
-//       'SELECT * FROM user_addresses WHERE id = $1 AND user_id = $2',
-//       [req.params.id, req.userId]
-//     );
 
-//     if (result.rows.length === 0) {
-//       return res.status(404).json({ error: 'Address not found' });
-//     }
-
-//     res.json(result.rows[0]);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// };
 const getAddressById = async (req, res) => {
   try {
     const user_id = req.user?.id;
