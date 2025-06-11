@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/folder', express.static('folder'));
+// app.use('/folder', express.static('folder'));
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -43,7 +43,7 @@ app.use("/api/user", subCategoryRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/category', categoryRoutes);
 
-app.use('/api/detection', detectionRoutes);
+// app.use('/api/detection', detectionRoutes);
 
 // app.use('/api/vendor-cities', vendorCitiesRoutes);
 
